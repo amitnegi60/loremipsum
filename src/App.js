@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+import React,{useState} from 'react'
 import './App.css';
+import Data from './layouts/Data';
 
 function App() {
+
+const [count, setCount] = useState(0);
+const [text, setText] = useState([]);
+
+const handel = (e) => {
+  e.preventDefault();
+
+  let amount = parseInt(count);
+if(count < 0){
+  amount = 0;
+}
+
+if(count > 8){
+  amount = 8;
+}
+  setText(Data.slice(0,amount));
+}
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="section-center">
+<h3>Get Lorem Ipsum Paragraphs </h3>
+<form className="lorem-form"> 
+<label htmlFor="amount">Paragraphs: </label>
+<input type="number" id="amount" name="amount" value={count} onChange={(e)=> setCount(e.target.value)}/>
+<button type="submit" className="btn" onClick={handel}>Generate</button>
+</form>
+<article className="lorem-text">
+{text.map((item,index) => {
+  return (
+    <p key={index}>{item}</p>
+
+  );
+})}
+</article>
+    </section>
   );
 }
 
